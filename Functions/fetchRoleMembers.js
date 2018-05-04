@@ -22,3 +22,4 @@ function fetchRoleMembers(roleName) {
   It has all the neccesary checks in place to make sure that you do not error during your function.
   */
   
+//Returns: Promise:<memberCollection/memberAmount>
