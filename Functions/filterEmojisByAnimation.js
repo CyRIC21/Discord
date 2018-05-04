@@ -8,7 +8,7 @@ function filterEmojisByAnimation() {
 
 //Example:
 filterEmojisByAnimation().then(emojis => {
-    msg.channel.send(`Animated Emojis include: ${emojis.map(e => e.name).join("\n")}`);
+  msg.channel.send(`Animated Emojis include: ${emojis.map(e => e.name).join("\n")}`);
 }).catch(error => console.error(error));
 
 /*
