@@ -10,8 +10,9 @@ function fetchRoles(userResolveableOrID) {
 //Example:
 const mentionedUser = msg.mentions.users.first();
 if (!mentionedUser) return msg.reply("No mentioned user!");
-const allRoles = fetchRoles(mentionedUser).map(roles => roles.name).catch(error => console.error(error));
-msg.channel.send(`Found all that mentioned users roles: \n${allRoles.join("\n")}`);
+fetchRoles(mentionedUser).then(r => {
+  msg.channel.send(`They have these roles: \`\`\`${r.map(roles => roles.name).join("\n")}\`\`\``);
+});
 
 /*
 This function will return a collection of roles from a specified member, so instead of having to manually get your member, then his roles.
