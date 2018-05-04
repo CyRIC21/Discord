@@ -1,6 +1,6 @@
 function fetchRoles(userResolveableOrID) {
   return new Promise(function(resolve, reject) {
-    const collection = msg.guild.fetchMember(userResolveableOrID).then(member => {
+    msg.guild.fetchMember(userResolveableOrID).then(member => {
       if (member) resolve(member.roles);
       else reject("That user couldn't be found in the guild.");
     });
