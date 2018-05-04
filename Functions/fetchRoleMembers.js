@@ -9,7 +9,7 @@ function fetchRoleMembers(roleName) {
 
 //Example:
 fetchRoleMembers("VIP").then(members => {
-    msg.channel.send(`The VIP role has \`${members.size}\` in it!`);
+  msg.channel.send(`The VIP role has \`${members.size}\` in it!`);
 }).catch(error => console.error(error));
 
 /*
