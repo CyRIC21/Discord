@@ -6,3 +6,8 @@ function fetchMember(userResolveable) {
     else reject("That user was unable to be fetched from the guild.");
   });
 }
+
+//Example of correct usage:
+const mentionedUser = msg.mentions.users.first();
+if (!mentionedUser) return msg.reply("No mentioned user!");
+fetchMember(mentionedUser).then(m => m.ban()).catch(error => console.error(error));
