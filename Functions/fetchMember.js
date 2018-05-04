@@ -13,7 +13,7 @@ if (!mentionedUser) return msg.reply("No mentioned user!");
 fetchMember(mentionedUser).then(m => m.ban()).catch(error => console.error(error));
 
 /*
-You could possibly place this function in a module and append it to your client variable as a means of easy access to fetch a member
+You could possibly place this function in a module and append it to your client variable as a means of easy access to fetch a member.
 Understand that you have to append the module to where your client is declared.
 You append modules to the client variable as such:
 require("./myFunctions.js)(yourClientVariable);
