@@ -8,7 +8,7 @@ function filterMembersByRole(roleName) {
         memberAmount: filteredCollection.size,
         specifiedRole: fetchedRole.name
     }
-    if (fetchedRole && customObject.memberAmount != 0) resolve(customObject);
+    if (fetchedRole && customObject.memberAmount !== 0) resolve(customObject);
     else reject("I couldn't find that role or no members were assigned to it!");
   });
 }
