@@ -17,7 +17,7 @@ function filterMembersByRole(roleName) {
 filterMembersByRole("VIP").then(role => {
     msg.channel.send(`These guild members have this role: \`${role.memberCollection.map(m => m.displayName).join("\n")}\``);
     msg.channel.send(`The ${role.specifiedRole} has ${role.memberAmount} members assigned to it!`);
-});
+}).catch(error => console.error(error));
 
 /*
 This function returns a collection of members that are assigned specifically to that role.
