@@ -32,7 +32,7 @@ exports.run = function(bot, msg, args) {
         sql.run("INSERT INTO muteDatabase (username, userID, unmuteDate, staffMember, reason) VALUES (?, ?, ?, ?, ?)", 
         [member.user.tag, member.id, createdTime, msg.author.tag, reason]);
       }).catch(function(error) {
-        bot.embed(msg, bot.hex, "Use command again, I had to create the table for the database.", `\`\`\`${error.stack}\`\`\``);
+        bot.embed(msg, bot.hex, "Use the mute command again, I had to create the table for the database.", `\`\`\`${error.stack}\`\`\``);
         sql.run("CREATE TABLE IF NOT EXISTS muteDatabase (username TEXT, userID TEXT, unmuteDate TEXT, staffMember TEXT, reason TEXT)").then(function() {
           sql.run("INSERT INTO muteDatabase (username, userID, unmuteDate, staffMember, reason) VALUES (?, ?, ?, ?, ?)", 
           [member.user.tag, member.id, createdTime, msg.author.tag, reason]);
