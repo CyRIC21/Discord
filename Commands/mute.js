@@ -56,11 +56,6 @@ exports.run = function(bot, msg, args) {
           }
         });
       });
-      /*
-      Check if the time has passed specified in the database for the mentioned user.
-      Also check if time has passed for users in the database on the ready event.
-      Hopefully this shouldn't error so there won't be a need for it.
-      */
     }, 5000);
 };
 
