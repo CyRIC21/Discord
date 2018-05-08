@@ -12,6 +12,7 @@ exports.run = function(bot, msg, args) {
   if (!mute) return bot.embed(msg, bot.hex, "Invalid Exception:", "Mute role: `Hexus-Mute` doesn't exist.");
   if (!time) return bot.embed(msg, bot.hex, "Invalid Exception:", "Please specify a time for the mute!");
   if (ms(time) <= 0) return bot.embed(msg, bot.hex, "Invalid Exception:", "Please specify a realistic time.");
+  if (Math.floor(ms(time)) <= 0) return bot.embed(msg, bot.hex, "Invalid Exception:", "Please specify a realistic time.");
   if (!bot.hasNumber(time)) return bot.embed(msg, bot.hex, "Invalid Exception:", "Please specify a time that has a number.");
   const reason = args.slice(2).join(" ");
   if (!reason) return bot.embed(msg, bot.hex, "Invalid Exception:", "Please specify a reason for this mute!");
@@ -45,6 +46,7 @@ exports.run = function(bot, msg, args) {
     var intervalCheck = setInterval(function() {
       bot.fetchMember(msg, user).then(function(member) {
         sql.get(`SELECT * FROM muteDatabase WHERE userID = ${member.id}`).then(function(row) {
+          if (!row) return clearInterval(intervalCheck);
           const currentTimeInMS = new Date().getTime();
           if (row.unmuteDate < currentTimeInMS) {
             bot.embed(msg, bot.hex, "Successfully unmuted user:", 
