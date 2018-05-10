@@ -16,5 +16,6 @@ function commandCooldown(userResolveable, amountOfMilliseconds) {
 
 /*
 This function basically uses the set object to store and remove users ID for a command cooldown.
+The set object just allows us to store unique values of any type.
 The timeout clears the author ID from the cooldown after your specified amount of time.
 */
