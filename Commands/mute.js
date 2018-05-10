@@ -12,6 +12,7 @@ exports.run = function(bot, msg, args) {
   if (!mute) return bot.embed(msg, bot.hex, "Invalid Exception:", "Mute role: `Hexus-Mute` doesn't exist.");
   if (!time) return bot.embed(msg, bot.hex, "Invalid Exception:", "Please specify a time for the mute!");
   if (ms(time) <= 0) return bot.embed(msg, bot.hex, "Invalid Exception:", "Please specify a realistic time.");
+  if (ms(time) > bot.settings.overflow) return bot.embed(msg, bot.hex, "Invalid Exception:", "Time overflow detected, please provide a realistic time.");
   if (Math.floor(ms(time)) <= 0) return bot.embed(msg, bot.hex, "Invalid Exception:", "Please specify a realistic time.");
   if (!bot.hasNumber(time)) return bot.embed(msg, bot.hex, "Invalid Exception:", "Please specify a time that has a number.");
   const reason = args.slice(2).join(" ");
