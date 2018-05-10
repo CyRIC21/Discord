@@ -5,7 +5,7 @@ const moment = require("moment");
 require("moment-duration-format");
 exports.run = function(bot, msg, args) {
   const time = args[1];
-  const muteChannel = msg.guild.channels.get(bot.settings.muteChannelID).id;
+  const muteChannel = msg.guild.channels.find("name", bot.settings.muteChannelName).id;
   const user = msg.mentions.users.first() || bot.users.get(args[0]);
   if (!user) return bot.embed(msg, bot.hex, "Invalid user mention:", "Couldn't find mention or ID is invalid.");
   const mute = msg.guild.roles.find("name", bot.settings.muteRole);
@@ -24,20 +24,20 @@ exports.run = function(bot, msg, args) {
     if (!member.roles.has(mute.id)) {
       sql.get(`SELECT * FROM muteDatabase WHERE userID = ${member.id}`).then(function(row) {
         if (!row) {
-          sql.run("INSERT INTO muteDatabase (username, userID, unmuteDate, staffMember, reason) VALUES (?, ?, ?, ?, ?)", 
-          [member.user.tag, member.id, createdTime, msg.author.tag, reason]); 
+          sql.run("INSERT INTO muteDatabase (username, userID, guildID, unmuteDate, staffMember, reason) VALUES (?, ?, ?, ?, ?, ?)", 
+          [member.user.tag, member.id, msg.guild.id, createdTime, msg.author.tag, reason]); 
           member.addRole(mute.id).then(function(member) {
             bot.embed(msg, bot.hex, "Successfully muted member:", 
-            `Muted: ${member.user.tag} \nMute Time: ${forTime} \nUnmute Time: ${convertedTime} \nReason: ${reason}`);
+            `Muted: ${member.user.tag} : [${member.id}] \nMute Time: ${forTime} \nUnmute Time: ${convertedTime} \nReason: ${reason}`);
             bot.embedID(msg, muteChannel, bot.hex, "Successfully muted member:", 
-            `Muted: ${member.user.tag} \nMute Time: ${forTime} \nUnmute Time: ${convertedTime} \nReason: ${reason}`);
+            `Muted: ${member.user.tag} : [${member.id}] \nMute Time: ${forTime} \nUnmute Time: ${convertedTime} \nReason: ${reason}`);
           });
         } else return bot.embed(msg, bot.hex, "Invalid mute attempt:", "User is in the database but somebody has removed their role, wait for their mute to expire so you can perform another mute");
       }).catch(function(error) {
         bot.embed(msg, bot.hex, "Use command again, had to create table for the database.", `\`\`\`${error.stack}\`\`\``);
-        sql.run("CREATE TABLE IF NOT EXISTS muteDatabase (username TEXT, userID TEXT, unmuteDate TEXT, staffMember TEXT, reason TEXT)").then(function() {
-          sql.run("INSERT INTO muteDatabase (username, userID, unmuteDate, staffMember, reason) VALUES (?, ?, ?, ?, ?)", 
-          [member.user.tag, member.id, createdTime, msg.author.tag, reason]);
+        sql.run("CREATE TABLE IF NOT EXISTS muteDatabase (username TEXT, userID TEXT, guildID TEXT unmuteDate TEXT, staffMember TEXT, reason TEXT)").then(function() {
+          sql.run("INSERT INTO muteDatabase (username, userID, guildID, unmuteDate, staffMember, reason) VALUES (?, ?, ?, ?, ?, ?)", 
+          [member.user.tag, member.id, msg.guild.id, createdTime, msg.author.tag, reason]);
         });
       });
     } else return bot.embed(msg, bot.hex, "Invalid Exception:", "Mentioned user is already muted.");
